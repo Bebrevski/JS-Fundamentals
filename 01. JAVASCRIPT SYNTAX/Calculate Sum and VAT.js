@@ -4,7 +4,7 @@ function sumAndVAT(arr) {
 
     for (let i = 0; i < arr.length; i++) {
 
-        sum+=arr[i];
+        sum += arr[i];
     }
 
     let VAT = sum * 0.2;
