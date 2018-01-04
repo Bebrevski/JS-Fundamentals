@@ -1,10 +1,14 @@
 function toUppercase(text) {
 
-    let delimeter = /\w+/g;
+    let strUpper = text.toUpperCase();
+    let words = extractWords();
+    words = words.filter(w => w !== '').;
 
-    let tokens = delimeter.exec(text);
+    return words.join(', ');
 
-    console.log(tokens);
+    function extractWords() {
+        return strUpper.split(/\W+/g);
+    }
 }
 
 toUppercase('Hi, how are you?');

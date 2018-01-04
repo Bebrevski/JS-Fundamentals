@@ -1,41 +1,18 @@
-function aggregate(arr) {
+function aggregateElements(elements) {
 
-    console.log(sumSequnce(arr));
-    console.log(inverseValues(arr));
-    console.log(concatContent(arr));
+    aggregate(elements, 0, (a, b) => a + b);
+    aggregate(elements, 0, (a, b) => a + 1 / b);
+    aggregate(elements, '', (a, b) => a + b);
 
-
-    function sumSequnce(array) {
-        let sum = 0;
-
-        for (let i = 0; i < array.length; i++) {
-            sum += array[i];
+    function aggregate(arr, initVal, func) {
+        let result = initVal;
+        for (let i = 0; i < arr.length; i++) {
+            result = func(result, arr[i]);
         }
-
-        return sum;
+        console.log(result);
     }
 
-
-    function inverseValues(array) {
-        let result = 0;
-
-        for (let i = 0; i < array.length; i++) {
-            result += 1 / array[i];
-        }
-
-        return result;
-    }
-
-    function concatContent(array) {
-        let concatenatedString = '';
-
-        for (let i = 0; i < array.length; i++) {
-            concatenatedString += array[i];
-        }
-
-        return concatenatedString;
-    }
 }
 
-aggregate([1, 2, 3]);
-aggregate([2, 4, 8, 16]);
+aggregateElements([1, 2, 3]);
+aggregateElements([2, 4, 8, 16]);
