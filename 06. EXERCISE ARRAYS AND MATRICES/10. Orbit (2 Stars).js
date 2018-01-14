@@ -17,9 +17,9 @@ function solve(data) {
     matrix[x][y] = 1;
 
     let number = 2;
-    let rowStart = 0;
+    let rowStart = x;
     let rowEnd = x;
-    let colStart = 0;
+    let colStart = y;
     let colEnd = y;
 
     let counterRowEnd = rowEnd;
@@ -34,17 +34,20 @@ function solve(data) {
         counterRowStart--;
         counterColStart--;
 
-        if (counterRowEnd > width - 1 && counterColEnd > height - 1 && counterRowStart < 0 && counterColStart < 0) {
+        if (counterRowEnd > width - 1 &&
+            counterColEnd > height - 1 &&
+            counterRowStart < 0 &&
+            counterColStart < 0) {
             break;
         }
-        if (rowEnd >= width - 1) {
+        if (rowEnd >= height - 1) {
             rowEnd = height - 1;
         }
         else {
             rowEnd++;
         }
         if (colEnd >= width - 1) {
-            colEnd = height - 1;
+            colEnd = width - 1;
         }
         else {
             colEnd++;
@@ -75,6 +78,6 @@ function solve(data) {
     console.log(matrix.map(row => row.join(' ')).join('\n') + '\n');
 }
 
-solve([4, 4, 0, 0]);
+//solve([4, 4, 0, 0]);
 solve([5, 5, 2, 2]);
 solve([3, 3, 2, 2]);
