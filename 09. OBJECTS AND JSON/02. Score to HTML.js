@@ -2,11 +2,11 @@ function solve(json) {
     let str = JSON.parse(json);
 
     let html = '<table>\n';
-    html += '  <tr><th>name</th><th>score</th></tr>\n';
+    html += '   <tr><th>name</th><th>score</th></tr>\n';
 
     for (let obj of str) {
-        html+= '  <tr>';
-        html += `<th>${escapeHTML(obj.name)}</th><th>${Number(obj.score)}</th>`;
+        html+= '   <tr>';
+        html += `<td>${escapeHTML(obj.name)}</td><td>${Number(obj.score)}</td>`;
         html += '</tr>\n';
     }
 

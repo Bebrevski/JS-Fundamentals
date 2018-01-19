@@ -2,7 +2,7 @@ function toUppercase(text) {
 
     let strUpper = text.toUpperCase();
     let words = extractWords();
-    words = words.filter(w => w !== '').;
+    words = words.filter(w => w !== '');
 
     return words.join(', ');
 

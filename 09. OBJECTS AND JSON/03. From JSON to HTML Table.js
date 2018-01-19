@@ -2,7 +2,7 @@ function fromJSONToHTMLTable(str) {
     let objs = JSON.parse(str);
     let html = '<table>\n';
 
-    html += '  <tr>';
+    html += '   <tr>';
 
     for (let key of Object.keys(objs[0])) {
         html += `<th>${key}</th>`;
@@ -11,16 +11,16 @@ function fromJSONToHTMLTable(str) {
     html += '</tr>\n';
 
     for (let obj of objs) {
-        html += '  <tr>';
+        html += '   <tr>';
 
         let keys = Object.keys(obj);
 
         for (let key of keys) {
 
             if (Number(obj[key])){
-                html += `<th>${Number(obj[key])}</th>`;
+                html += `<td>${Number(obj[key])}</td>`;
             }else {
-                html += `<th>${escapeHTML(obj[key])}</th>`;
+                html += `<td>${escapeHTML(obj[key])}</td>`;
             }
         }
 

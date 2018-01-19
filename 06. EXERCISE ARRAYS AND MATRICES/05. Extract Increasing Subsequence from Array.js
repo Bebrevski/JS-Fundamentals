@@ -1,15 +1,20 @@
-function solve(arr) {
-
-    let newArr = [arr[0]];
-
-    for (let i = 1; i < arr.length; i++) {
-        if (arr[i] >= newArr[newArr.length - 1]) {
-            newArr.push(arr[i]);
+function a(input) {
+    input = input.map(Number);
+    let arr = [];
+    let biggest;
+    input.forEach(function (e) {
+        if (biggest !== undefined) {
+            if (e >= biggest) {
+                arr.push(e);
+                biggest = e;
+            }
         }
-    }
-    console.log(newArr.join('\n'));
-
-    Array.filter()
+        else {
+            biggest = e;
+            arr.push(e);
+        }
+    });
+    arr.forEach(e => console.log(e));
 }
 
 solve([1, 3, 8, 4, 10, 12, 3, 2, 24]);

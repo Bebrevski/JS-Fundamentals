@@ -7,9 +7,9 @@ function solve(arr) {
         let [town, latitude, longitude] = arr[i].split('|').filter(e => e !== '');
 
         let currentCity = {
-            'Town': town,
+            'Town': town.trim(),
             'Latitude': Number(latitude),
-            'Longitute': Number(longitude)
+            'Longitude': Number(longitude)
         };
 
         result.push(currentCity);

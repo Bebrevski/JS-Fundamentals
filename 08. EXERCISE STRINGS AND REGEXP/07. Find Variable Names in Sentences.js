@@ -11,7 +11,7 @@ function solve(text) {
         match = pattern.exec(text);
     }
 
-    console.log(result.join(', '));
+    console.log(result.join(','));
 }
 
 solve('__invalidVariable _evenMoreInvalidVariable_ _validVariable');
