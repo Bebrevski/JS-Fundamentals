@@ -1,5 +1,5 @@
 function solve(arr) {
-    let pattern = /www\.[a-zA-z0-9-]+(\.[a-z]+)+/gm;
+    let pattern = /www\.[a-zA-Z0-9-]+(\.[a-z]+)+/gm;
 
     let result = [];
 
@@ -8,7 +8,7 @@ function solve(arr) {
         let match = pattern.exec(line);
 
         while (match !== null) {
-            result.push(match);
+            result.push(match[0]);
             match = pattern.exec(line);
         }
     }

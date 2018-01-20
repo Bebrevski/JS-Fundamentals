@@ -1,8 +1,8 @@
 function solve(arr) {
-    let namePattern = /\*[A-Z][a-z]+(?=\s|\b)/g;
-    let phonePattern = /\+[0-9-]{10}(?=\s|\b)/g;
-    let IDpattern = /![a-zA-Z0-9]+(?=\s|\b)/g;
-    let secretBasePattern = /_[a-zA-Z0-9]+(?=\s|\b)/g;
+    let namePattern = /(\*[A-Z][a-zA-Z]*)(?= |\t|$)/gm;
+    let phonePattern = /(\+[0-9-]{10})(?= |\t|$)/gm;
+    let IDpattern = /(![0-9a-zA-Z]+)(?= |\t|$)/gm;
+    let secretBasePattern = /(_[0-9a-zA-Z]+)(?= |\t|$)/gm;
 
     let result = [];
 
