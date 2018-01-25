@@ -1,0 +1,24 @@
+function solve(keyword, text) {
+    let pattern = /(north|east)\D*(\d{2})[^,]*(,)\D*(\d{6})/gi;
+    let messagePattern = new RegExp(`(${keyword})(.*?)(${keyword})`, 'g');
+    let message = messagePattern.exec(text)[2];
+
+    let latOutput = '';
+    let longOutput = '';
+    let match = pattern.exec(text);
+    while (match) {
+        if (match[1].toLowerCase() === 'north') {
+            latOutput = `${match[2]}.${match[4]} N`;
+        } else {
+            longOutput = `${match[2]}.${match[4]} E`;
+        }
+        match = pattern.exec(text);
+    }
+
+    console.log(latOutput);
+    console.log(longOutput);
+    console.log(`Message: ${message}`);
+}
+
+solve('keyword', '\tkeyword  let them eat cake!keywordNORTHEASTNORTH again42,north234567,dsae345East\t23,\n' +
+    '432568');

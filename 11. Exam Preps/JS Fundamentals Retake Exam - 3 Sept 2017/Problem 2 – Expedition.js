@@ -1,158 +1,92 @@
-function solve(primary, secondary, overlay, start) {
+function expedition(primary, secondary, targets, startingPoint) {
+    let steps = 1;
+    let primaryMatrixRows = primary.length;
+    let primaryMatrixCols = primary[0].length;
+    let secondaryMatrixRows = secondary.length;
+    let secondaryMatrixCols = secondary[0].length;
 
-    for (let i = 0; i < overlay.length; i++) {
-        let [x, y] = overlay[i];
-
-        primary = spinThatShit(primary, secondary, x, y);
+    for (let target of targets) {
+        modifyPrimary(target);
     }
 
-    let startRow = start[0];
-    let startCol = start[1];
-    let steps = 0;
+    let currentPosition = [startingPoint[0], startingPoint[1]];
+    let previousDirection;
 
-    let foundWay = startWalkingDude(primary, startRow, startCol, steps);
+    while (true) {
+        if (currentPosition[0] + 1 < primaryMatrixRows && primary[currentPosition[0] + 1][currentPosition[1]] === 0 && previousDirection !== "up") {
+            currentPosition = [currentPosition[0] + 1, currentPosition[1]];
+            previousDirection = "down";
+        } else if (currentPosition[1] + 1 < primaryMatrixCols && primary[currentPosition[0]][currentPosition[1] + 1] === 0 && previousDirection !== "left") {
+            currentPosition = [currentPosition[0], currentPosition[1] + 1];
+            previousDirection = "right";
+        } else if (currentPosition[0] > 0 && primary[currentPosition[0] - 1][currentPosition[1]] === 0 && previousDirection !== "down") {
+            currentPosition = [currentPosition[0] - 1, currentPosition[1]];
+            previousDirection = "up";
+        } else if (currentPosition[1] > 0 && primary[currentPosition[0]][currentPosition[1] - 1] === 0 && previousDirection !== "right") {
+            currentPosition = [currentPosition[0], currentPosition[1] - 1];
+            previousDirection = "left";
+        } else {
+            break;
+        }
+        steps++;
+    }
 
     console.log(steps);
+    definePosition(currentPosition);
 
-    if (foundWay) {
-        if (startRow === 0) {
-            console.log('Top');
-        } else if (startRow === primary.length - 1) {
-            console.log('Bottom');
-        } else if (startCol === 0) {
-            console.log('Left');
-        } else if (startCol === primary[0].length - 1) {
-            console.log('Right');
-        }
-    } else {
-
-        let quadrant1 = startRow < primary.length / 2 && startCol > primary[0].length / 2;
-        let quadrant2 = startRow < primary.length / 2 && startCol < primary[0].length / 2;
-        let quadrant3 = startRow > primary.length / 2 && startCol < primary[0].length / 2;
-        let quadrant4 = startRow > primary.length / 2 && startCol > primary[0].length / 2;
-        let quadrant = '';
-
-        if (quadrant1) {
-            quadrant = '1';
-        } else if (quadrant2) {
-            quadrant = '2';
-        } else if (quadrant3) {
-            quadrant = '3';
-        } else if (quadrant4) {
-            quadrant = '4';
-        }
-
-        console.log(`Dead end ${quadrant}`);
-    }
-
-
-    function startWalkingDude(primary, startRow, startCol, steps) {
-
-        let isZero = primary[startRow - 1][startCol] === 0 || primary[startRow + 1][startCol] === 0 || primary[startRow][startCol - 1] === 0 || primary[startRow][startCol + 1] === 0;
-
-        while (isZero) {
-
-            let up = primary[startRow - 1][startCol] === 0;
-            let down = primary[startRow + 1][startCol] === 0;
-            let left = primary[startRow][startCol - 1] === 0;
-            let right = primary[startRow][startCol + 1] === 0;
-
-            if (up) {
-
-                primary[startRow][startCol] = undefined;
-                startRow--;
-                steps++;
-
-            } else if (down) {
-
-                primary[startRow][startCol] = undefined;
-                startRow++;
-                steps++;
-
-            } else if (left) {
-
-                primary[startRow][startCol] = undefined;
-                startCol--;
-                steps++;
-
-            } else if (right) {
-
-                primary[startRow][startCol] = undefined;
-                startCol++;
-                steps++;
-
-            }
-
-            isZero = primary[startRow - 1][startCol] === 0 || primary[startRow + 1][startCol] === 0 || primary[startRow][startCol - 1] === 0 || primary[startRow][startCol + 1] === 0;
-        }
-
-        let out = startRow === primary.length - 1 ||
-            startRow === 0 ||
-            startCol === primary[0].length - 1 ||
-            startCol === 0;
-
-        if (out) {
-            return true;
-        }
-        return false;
-
-    }
-
-    function spinThatShit(primary, secondary, x, y) {
-
-        let endRow = Math.min(primary.length, secondary.length);
-        let endCol = Math.min(primary[0].length, secondary[0].length);
-
-        let secondaryRowEnd = 0;
-        let secondaryColEnd = 0;
-
-        for (let row = x; row < x + endRow; row++) {
-
-            if (primary[row] === undefined) {
-                return primary;
-            }
-            for (let col = y; col < y + endCol; col++) {
-
-                if (primary[row][col] === undefined) {
-                    break;
+    function modifyPrimary(coordinates) {
+        let row = Number(coordinates[0]);
+        let col = Number(coordinates[1]);
+        for (let i = 0; i < secondaryMatrixRows; i++) {
+            if (i + row < primaryMatrixRows) {
+                for (let j = 0; j < secondaryMatrixCols; j++) {
+                    if (primary[i + row][j + col] !== undefined && secondary[i][j] === 1) {
+                        primary[i + row][j + col] = primary[i + row][j + col] === 0 ? 1 : 0;
+                    }
                 }
-
-                primary[row][col] = Math.abs(primary[row][col] - secondary[secondaryRowEnd][secondaryColEnd]);
-
-                secondaryColEnd++;
             }
-
-            secondaryColEnd = 0;
-            secondaryRowEnd++;
         }
+    }
 
-        return primary;
+    function definePosition(currentPosition) {
+        let currentRow = currentPosition[0];
+        let currentCol = currentPosition[1];
+        if (currentRow === 0) {
+            console.log("Top");
+        } else if (currentRow === primaryMatrixRows - 1) {
+            console.log("Bottom");
+        } else if (currentCol === 0) {
+            console.log("Left");
+        } else if (currentCol === primaryMatrixCols - 1) {
+            console.log("Right");
+        } else if (currentRow < primaryMatrixRows / 2 && currentCol >= primaryMatrixCols / 2) {
+            console.log("Dead end 1");
+        } else if (currentRow < primaryMatrixRows / 2 && currentCol < primaryMatrixCols / 2) {
+            console.log("Dead end 2");
+        } else if (currentRow >= primaryMatrixRows / 2 && currentCol < primaryMatrixCols / 2) {
+            console.log("Dead end 3");
+        } else if (currentRow >= primaryMatrixRows / 2 && currentCol >= primaryMatrixCols / 2) {
+            console.log("Dead end 4");
+        }
     }
 }
 
-solve([[1, 1, 0, 1, 1, 1, 1, 0],
+expedition([
+        [1, 1, 0, 1, 1, 1, 1, 0],
         [0, 1, 1, 1, 0, 0, 0, 1],
         [1, 0, 0, 1, 0, 0, 0, 1],
         [0, 0, 0, 1, 1, 0, 0, 1],
         [1, 0, 0, 1, 1, 1, 1, 1],
-        [1, 0, 1, 1, 0, 1, 0, 0]],
-    [[0, 1, 1],
+        [1, 0, 1, 1, 0, 1, 0, 0]
+    ],
+    [
+        [0, 1, 1],
         [0, 1, 0],
-        [1, 1, 0]],
-    [[1, 1],
+        [1, 1, 0]
+    ],
+    [
+        [1, 1],
         [2, 3],
-        [5, 3]],
+        [5, 3]
+    ],
     [0, 2]);
-
-solve([[1, 1, 0, 1],
-        [0, 1, 1, 0],
-        [0, 0, 1, 0],
-        [1, 0, 1, 0]],
-    [[0, 0, 1, 0, 1],
-        [1, 0, 0, 1, 1],
-        [1, 0, 1, 1, 1],
-        [1, 0, 1, 0, 1]],
-    [[0, 0],
-        [2, 1],
-        [1, 0]],
-    [2, 0]);
