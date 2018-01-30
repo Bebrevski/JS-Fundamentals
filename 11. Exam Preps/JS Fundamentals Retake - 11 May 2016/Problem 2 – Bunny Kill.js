@@ -20,10 +20,9 @@ function solve(rows) {
         matrix = killNearbyBunnies(coor[0], coor[1]);
 
     }
-
     for (let row = 0; row < matrix.length; row++) {
         for (let col = 0; col < matrix.length; col++) {
-            if (matrix[row][col] !== 0) {
+            if (matrix[row][col] !== 0 && col < matrix[0].length) {
                 snowballDamage += matrix[row][col];
                 matrix[row][col] = 0;
                 targets++;
@@ -49,7 +48,7 @@ function solve(rows) {
         return matrix;
     }
 }
-
+/*
 solve([
     '5 10 15 20',
     '10 10 10 10',
@@ -59,8 +58,20 @@ solve([
 ]);
 
 solve([
+    '10 30 40',
+    '100 15 20',
+    '0 5 20',
+    '0,0 1,1 2,2'
+]);
+
+solve([
     '10 10 10',
-    '10 10 10',
-    '10 10 10',
-    '0,0'
+    '10 15 10',
+    '0,0 0,2 1,0 1,2',
+]);
+*/
+solve([
+    '10',
+    '10',
+    '0,0',
 ]);
