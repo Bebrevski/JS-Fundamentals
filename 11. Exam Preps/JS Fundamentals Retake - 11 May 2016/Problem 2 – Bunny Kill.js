@@ -21,8 +21,8 @@ function solve(rows) {
 
     }
     for (let row = 0; row < matrix.length; row++) {
-        for (let col = 0; col < matrix.length; col++) {
-            if (matrix[row][col] !== 0 && col < matrix[0].length) {
+        for (let col = 0; col < matrix[row].length; col++) {
+            if (matrix[row][col] !== 0 && col < matrix[row].length) {
                 snowballDamage += matrix[row][col];
                 matrix[row][col] = 0;
                 targets++;
@@ -39,7 +39,7 @@ function solve(rows) {
         for (let r = row - 1; r <= row + 1; r++) {
             if (r < 0 || r >= matrix.length) continue;
             for (let c = col - 1; c <= col + 1; c++) {
-                if (c < 0 || c >= matrix[0].length) continue;
+                if (c < 0 || c >= matrix[row].length) continue;
 
                 matrix[r][c] = Math.max(0, matrix[r][c] - damage);
             }
@@ -72,6 +72,12 @@ solve([
 */
 solve([
     '10',
-    '10',
     '0,0',
+]);
+
+solve([
+    '10 10 10',
+    '10 10 10',
+    '10 10 10',
+    '0,0'
 ]);
